@@ -1,0 +1,16 @@
+While automatic speech recognition (ASR) systems have steadily improved 
+and are now in widespread use, their accuracy continues to lag behind human performance,
+particularly in adverse conditions. This thesis revisits the basic acoustic modeling assumptions 
+common to most ASR systems and argues that improvements to the underlying model of speech are required to address these shortcomings.
+A number of problems with the standard method of hiddenMarkov models 
+and features derived from fixed, frame-based spectra are discussed.
+Based on these problems, a set of desirable properties of an improved acoustic model are proposed, 
+and we present a "parts-based" framework as an alternative. 
+The parts-based model, based on the previous work in machine vision, 
+uses graphical models to represent speech with a deformable template of spectro-temporally localized "parts",
+as opposed to modeling speech as a sequence of fixed spectral profiles. 
+We discuss the proposed model's relationship to HMMs and segment-based recognizers,
+and describe how they can be viewed as special cases of the PBM.
+Two variations of PBMs are described in detail. The first represents each phonetic unit
+with a set of time-frequency patches which act as filters over a spectrogram. 
+The model structure encodes the "patches" relative T-F positions.

@@ -49,7 +49,7 @@ class ThisStudy:
 
         coeff = np.dot(inv(A), Y)  # Linear regression
 
-        out_level = coeff[1] * in_len + coeff[0]
+        out_level = float(coeff[1] * in_len + coeff[0])
 
         return out_level
 
@@ -301,15 +301,6 @@ class ThisStudy:
 
         self.read_csv(self.group_index_out, self.dic_index_out)
 
-        ### Temporary Code ###
-        print_screen('\n\n')
-        print_screen('Total path: ', os.path.isfile(total_path))
-        print_screen('Total path lang2: ', os.path.isfile(total_path_kor))
-        print_screen('Total path csv: ', os.path.isfile(total_path_csv))
-        print_screen(os.getcwd())
-
-        input("Press Enter to continue...")
-
         # Load the file for Lang1(eng).
         try:
             with open(total_path, mode='r', encoding='cp949') as f_eng:
@@ -533,6 +524,9 @@ class ThisStudy:
                 regressed_level = self.lin_reg_out(len_sent)
                 wrong = 1
 
+                # Ensure regressed_level is at least 1 to avoid division by zero
+                if regressed_level < 1:
+                    regressed_level = 1
                 regressed_er = np.arange(0.3, 1, (1 / regressed_level))  # The regressed level of blank.
 
                 if self.mode == 1:

@@ -63,24 +63,109 @@ class PyEngAdvancedGUI:
         if 'clam' in style.theme_names():
             style.theme_use('clam')
         
-        # Configure colors and fonts
-        style.configure('Title.TLabel', font=('Helvetica', 18, 'bold'))
-        style.configure('Header.TLabel', font=('Helvetica', 12, 'bold'))
-        style.configure('Info.TLabel', font=('Helvetica', 10))
-        style.configure('Success.TLabel', font=('Helvetica', 10), foreground='green')
-        style.configure('Error.TLabel', font=('Helvetica', 10), foreground='red')
-        style.configure('Highlight.TLabel', font=('Helvetica', 11, 'bold'), foreground='blue')
+        # Define color scheme
+        self.colors = {
+            'primary': '#2E86AB',      # Blue
+            'secondary': '#A23B72',    # Purple
+            'success': '#28A745',      # Green
+            'warning': '#FFC107',      # Yellow
+            'danger': '#DC3545',       # Red
+            'info': '#17A2B8',         # Cyan
+            'light': '#F8F9FA',        # Light gray
+            'dark': '#343A40',         # Dark gray
+            'white': '#FFFFFF',        # White
+            'background': '#F5F5F5'    # Light background
+        }
         
-        # Configure buttons
-        style.configure('Primary.TButton', font=('Helvetica', 11, 'bold'))
-        style.configure('Secondary.TButton', font=('Helvetica', 10))
-        style.configure('Success.TButton', font=('Helvetica', 10, 'bold'), foreground='green')
+        # Configure colors and fonts with enhanced styling
+        style.configure('Title.TLabel', 
+                       font=('Helvetica', 20, 'bold'), 
+                       foreground=self.colors['primary'],
+                       background=self.colors['background'])
+        
+        style.configure('Header.TLabel', 
+                       font=('Helvetica', 12, 'bold'), 
+                       foreground=self.colors['dark'])
+        
+        style.configure('Info.TLabel', 
+                       font=('Helvetica', 10), 
+                       foreground=self.colors['dark'])
+        
+        style.configure('Success.TLabel', 
+                       font=('Helvetica', 10, 'bold'), 
+                       foreground=self.colors['success'])
+        
+        style.configure('Error.TLabel', 
+                       font=('Helvetica', 10, 'bold'), 
+                       foreground=self.colors['danger'])
+        
+        style.configure('Highlight.TLabel', 
+                       font=('Helvetica', 11, 'bold'), 
+                       foreground=self.colors['primary'])
+        
+        # Configure enhanced buttons with colors
+        style.configure('Primary.TButton', 
+                       font=('Helvetica', 11, 'bold'),
+                       background=self.colors['primary'],
+                       foreground=self.colors['white'])
+        
+        style.configure('Secondary.TButton', 
+                       font=('Helvetica', 10),
+                       background=self.colors['secondary'],
+                       foreground=self.colors['white'])
+        
+        style.configure('Success.TButton', 
+                       font=('Helvetica', 10, 'bold'), 
+                       background=self.colors['success'],
+                       foreground=self.colors['white'])
+        
+        style.configure('Warning.TButton', 
+                       font=('Helvetica', 10, 'bold'),
+                       background=self.colors['warning'],
+                       foreground=self.colors['dark'])
+        
+        style.configure('Danger.TButton', 
+                       font=('Helvetica', 10, 'bold'),
+                       background=self.colors['danger'],
+                       foreground=self.colors['white'])
+        
+        # Add Info button style
+        style.configure('Info.TButton', 
+                       font=('Helvetica', 10, 'bold'),
+                       background=self.colors['info'],
+                       foreground=self.colors['white'])
+        
+        # Configure checkbox style
+        style.configure('Check.TCheckbutton', 
+                       font=('Helvetica', 10),
+                       foreground=self.colors['dark'],
+                       background=self.colors['white'])
+        
+        # Configure frames with subtle borders
+        style.configure('Card.TFrame', 
+                       background=self.colors['white'],
+                       relief='solid',
+                       borderwidth=1)
+        
+        # Configure LabelFrames with enhanced styling
+        style.configure('Card.TLabelframe', 
+                       background=self.colors['white'],
+                       relief='solid',
+                       borderwidth=2)
+        
+        style.configure('Card.TLabelframe.Label', 
+                       font=('Helvetica', 11, 'bold'),
+                       foreground=self.colors['primary'],
+                       background=self.colors['white'])
         
     def create_widgets(self):
         """Create and organize all GUI widgets"""
-        # Main container
-        main_frame = ttk.Frame(self.root, padding="10")
-        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        # Set background color for root window
+        self.root.configure(bg=self.colors['background'])
+        
+        # Main container with enhanced styling
+        main_frame = ttk.Frame(self.root, padding="15", style='Card.TFrame')
+        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), padx=10, pady=10)
         
         # Configure grid weights
         self.root.columnconfigure(0, weight=1)
@@ -88,13 +173,17 @@ class PyEngAdvancedGUI:
         main_frame.columnconfigure(1, weight=1)
         main_frame.rowconfigure(2, weight=1)
         
-        # Title
-        title_label = ttk.Label(main_frame, text="pyEng Advanced Language Learning", style='Title.TLabel')
-        title_label.grid(row=0, column=0, columnspan=3, pady=(0, 20))
+        # Title with enhanced styling
+        title_frame = ttk.Frame(main_frame, style='Card.TFrame')
+        title_frame.grid(row=0, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 20))
+        title_frame.columnconfigure(0, weight=1)
         
-        # Configuration Frame
-        config_frame = ttk.LabelFrame(main_frame, text="Study Configuration", padding="10")
-        config_frame.grid(row=1, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 10))
+        title_label = ttk.Label(title_frame, text="🎓 pyEng Advanced Language Learning", style='Title.TLabel')
+        title_label.grid(row=0, column=0, pady=15)
+        
+        # Configuration Frame with enhanced styling
+        config_frame = ttk.LabelFrame(main_frame, text="⚙️ Study Configuration", padding="15", style='Card.TLabelframe')
+        config_frame.grid(row=1, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 15))
         config_frame.columnconfigure(1, weight=1)
         config_frame.columnconfigure(3, weight=1)
         
@@ -114,78 +203,120 @@ class PyEngAdvancedGUI:
         self.mode_combo = ttk.Combobox(config_frame, textvariable=self.current_mode, state="readonly", width=15)
         self.mode_combo['values'] = ('Standard', 'Review', 'Check mode')
         self.mode_combo.grid(row=1, column=1, sticky=(tk.W, tk.E), padx=(0, 20), pady=(10, 0))
+
+        # Random order checkbox
+        self.random_order_var = tk.BooleanVar(value=False)
+        self.random_checkbox = ttk.Checkbutton(config_frame, text="🎲 Random Text Order", 
+                                              variable=self.random_order_var, style='Check.TCheckbutton')
+        self.random_checkbox.grid(row=1, column=2, sticky=tk.W, padx=(0, 20), pady=(10, 0))
         
-        # Start button
-        self.start_button = ttk.Button(config_frame, text="Start Study Session", style='Primary.TButton', 
+        # Start button with enhanced styling
+        self.start_button = ttk.Button(config_frame, text="🚀 Start Study Session", style='Primary.TButton', 
                                       command=self.start_study_session)
-        self.start_button.grid(row=1, column=2, columnspan=2, sticky=(tk.W, tk.E), padx=(0, 20), pady=(10, 0))
+        self.start_button.grid(row=1, column=3, sticky=(tk.W, tk.E), padx=(0, 20), pady=(10, 0))
         
-        # Study Area Frame
-        study_frame = ttk.LabelFrame(main_frame, text="Study Area", padding="10")
-        study_frame.grid(row=2, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
+        # Study Area Frame with enhanced styling
+        study_frame = ttk.LabelFrame(main_frame, text="📚 Study Area", padding="15", style='Card.TLabelframe')
+        study_frame.grid(row=2, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 15))
         study_frame.columnconfigure(0, weight=1)
         study_frame.rowconfigure(1, weight=1)
         study_frame.rowconfigure(3, weight=1)
         study_frame.rowconfigure(5, weight=1)
         
-        # Progress info
-        self.progress_label = ttk.Label(study_frame, text="Ready to start study session", style='Info.TLabel')
-        self.progress_label.grid(row=0, column=0, sticky=tk.W, pady=(0, 10))
+        # Progress info with enhanced styling
+        progress_frame = ttk.Frame(study_frame, style='Card.TFrame')
+        progress_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 15))
+        progress_frame.columnconfigure(0, weight=1)
         
-        # Korean sentence display
-        ttk.Label(study_frame, text="Korean Sentence:", style='Header.TLabel').grid(row=1, column=0, sticky=tk.W, pady=(0, 5))
-        self.korean_text = scrolledtext.ScrolledText(study_frame, height=3, wrap=tk.WORD, font=('Helvetica', 12))
-        self.korean_text.grid(row=2, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
+        self.progress_label = ttk.Label(progress_frame, text="🎯 Ready to start study session", style='Info.TLabel')
+        self.progress_label.grid(row=0, column=0, sticky=tk.W, padx=10, pady=10)
         
-        # Shuffled words display (for blanking mode)
-        self.shuffled_frame = ttk.LabelFrame(study_frame, text="Shuffled Words (Click to use)", padding="5")
-        self.shuffled_frame.grid(row=3, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        # Korean sentence display with enhanced styling (single line)
+        ttk.Label(study_frame, text="🇰🇷 Korean Sentence:", style='Header.TLabel').grid(row=1, column=0, sticky=tk.W, pady=(0, 5))
+        self.korean_text = scrolledtext.ScrolledText(study_frame, height=1, wrap=tk.WORD, font=('Helvetica', 12),
+                                                    bg=self.colors['light'], fg=self.colors['dark'],
+                                                    insertbackground=self.colors['primary'],
+                                                    selectbackground=self.colors['primary'],
+                                                    selectforeground=self.colors['white'])
+        self.korean_text.grid(row=2, column=0, sticky=(tk.W, tk.E), pady=(0, 15))
+        
+        # Shuffled words display (for blanking mode) with enhanced styling (single line)
+        self.shuffled_frame = ttk.LabelFrame(study_frame, text="🔤 Shuffled Words", padding="10", style='Card.TLabelframe')
+        self.shuffled_frame.grid(row=3, column=0, sticky=(tk.W, tk.E), pady=(0, 15))
         self.shuffled_frame.columnconfigure(0, weight=1)
         
-        self.shuffled_text = scrolledtext.ScrolledText(self.shuffled_frame, height=2, wrap=tk.WORD, font=('Helvetica', 11))
-        self.shuffled_text.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-        self.shuffled_text.bind('<Button-1>', self.on_word_click)
+        self.shuffled_text = scrolledtext.ScrolledText(self.shuffled_frame, height=1, wrap=tk.WORD, font=('Helvetica', 11),
+                                                      bg=self.colors['info'], fg=self.colors['white'],
+                                                      insertbackground=self.colors['white'],
+                                                      selectbackground=self.colors['warning'],
+                                                      selectforeground=self.colors['dark'])
+        self.shuffled_text.grid(row=0, column=0, sticky=(tk.W, tk.E))
         
-        # English sentence display (with blanks)
-        ttk.Label(study_frame, text="English Sentence (with blanks):", style='Header.TLabel').grid(row=4, column=0, sticky=tk.W, pady=(0, 5))
-        self.english_display = scrolledtext.ScrolledText(study_frame, height=3, wrap=tk.WORD, font=('Helvetica', 12))
-        self.english_display.grid(row=5, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
+        # English sentence display (with blanks) with enhanced styling (single line)
+        ttk.Label(study_frame, text="🇺🇸 English Sentence (with blanks):", style='Header.TLabel').grid(row=4, column=0, sticky=tk.W, pady=(0, 5))
+        self.english_display = scrolledtext.ScrolledText(study_frame, height=1, wrap=tk.WORD, font=('Helvetica', 12),
+                                                        bg=self.colors['light'], fg=self.colors['dark'],
+                                                        insertbackground=self.colors['primary'],
+                                                        selectbackground=self.colors['primary'],
+                                                        selectforeground=self.colors['white'])
+        self.english_display.grid(row=5, column=0, sticky=(tk.W, tk.E), pady=(0, 15))
         
-        # English input area
-        ttk.Label(study_frame, text="Your Answer:", style='Header.TLabel').grid(row=6, column=0, sticky=tk.W, pady=(0, 5))
-        self.english_input = scrolledtext.ScrolledText(study_frame, height=3, wrap=tk.WORD, font=('Helvetica', 12))
-        self.english_input.grid(row=7, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
+        # English input area with enhanced styling (single line)
+        ttk.Label(study_frame, text="✍️ Your Answer:", style='Header.TLabel').grid(row=6, column=0, sticky=tk.W, pady=(0, 5))
+        self.english_input = scrolledtext.ScrolledText(study_frame, height=1, wrap=tk.WORD, font=('Helvetica', 12),
+                                                      bg=self.colors['white'], fg=self.colors['dark'],
+                                                      insertbackground=self.colors['primary'],
+                                                      selectbackground=self.colors['primary'],
+                                                      selectforeground=self.colors['white'])
+        self.english_input.grid(row=7, column=0, sticky=(tk.W, tk.E), pady=(0, 15))
         self.english_input.bind('<Return>', self._on_enter_submit)
         
-        # Control buttons
-        button_frame = ttk.Frame(study_frame)
-        button_frame.grid(row=8, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        # Control buttons with enhanced styling
+        button_frame = ttk.Frame(study_frame, style='Card.TFrame')
+        button_frame.grid(row=8, column=0, sticky=(tk.W, tk.E), pady=(0, 15))
         button_frame.columnconfigure(1, weight=1)
         
-        self.submit_button = ttk.Button(button_frame, text="Submit Answer", style='Primary.TButton', 
+        self.submit_button = ttk.Button(button_frame, text="✅ Submit Answer", style='Success.TButton', 
                                        command=self.submit_answer, state='disabled')
-        self.submit_button.grid(row=0, column=0, padx=(0, 10))
+        self.submit_button.grid(row=0, column=0, padx=(10, 10), pady=10)
         
-        self.show_answer_button = ttk.Button(button_frame, text="Show Answer", style='Secondary.TButton', 
+        self.show_answer_button = ttk.Button(button_frame, text="👁️ Show Answer", style='Info.TButton', 
                                             command=self.show_correct_answer, state='disabled')
-        self.show_answer_button.grid(row=0, column=1, padx=(0, 10))
+        self.show_answer_button.grid(row=0, column=1, padx=(0, 10), pady=10)
         
-        self.skip_button = ttk.Button(button_frame, text="Skip", style='Secondary.TButton', 
+        self.skip_button = ttk.Button(button_frame, text="⏭️ Skip", style='Warning.TButton', 
                                      command=self.skip_sentence, state='disabled')
-        self.skip_button.grid(row=0, column=2, padx=(0, 10))
+        self.skip_button.grid(row=0, column=2, padx=(0, 10), pady=10)
         
-        self.end_button = ttk.Button(button_frame, text="End Session", style='Secondary.TButton', 
+        self.end_button = ttk.Button(button_frame, text="⏹️ End Session", style='Danger.TButton', 
                                     command=self.end_study_session, state='disabled')
-        self.end_button.grid(row=0, column=3)
+        self.end_button.grid(row=0, column=3, padx=(0, 10), pady=10)
         
-        # Feedback area
-        self.feedback_text = scrolledtext.ScrolledText(study_frame, height=3, wrap=tk.WORD, font=('Helvetica', 10))
-        self.feedback_text.grid(row=9, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(10, 0))
+        # Feedback area with enhanced styling
+        feedback_frame = ttk.LabelFrame(study_frame, text="💬 Feedback", padding="10", style='Card.TLabelframe')
+        feedback_frame.grid(row=9, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 15))
+        feedback_frame.columnconfigure(0, weight=1)
+        feedback_frame.rowconfigure(0, weight=1)
         
-        # Status bar
-        self.status_var = tk.StringVar(value="Ready")
-        status_bar = ttk.Label(main_frame, textvariable=self.status_var, relief=tk.SUNKEN, anchor=tk.W)
-        status_bar.grid(row=3, column=0, columnspan=3, sticky=(tk.W, tk.E))
+        self.feedback_text = scrolledtext.ScrolledText(feedback_frame, height=1, wrap=tk.WORD, font=('Helvetica', 10),
+                                                      bg=self.colors['light'], fg=self.colors['dark'],
+                                                      insertbackground=self.colors['primary'],
+                                                      selectbackground=self.colors['primary'],
+                                                      selectforeground=self.colors['white'])
+        self.feedback_text.grid(row=0, column=0, sticky=(tk.W, tk.E))
+        
+        # Status bar with enhanced styling
+        status_frame = ttk.Frame(main_frame, style='Card.TFrame')
+        status_frame.grid(row=3, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 10))
+        status_frame.columnconfigure(0, weight=1)
+        
+        self.status_var = tk.StringVar(value="🚀 Ready")
+        status_bar = ttk.Label(status_frame, textvariable=self.status_var, 
+                              font=('Helvetica', 9, 'bold'),
+                              foreground=self.colors['primary'],
+                              background=self.colors['light'],
+                              anchor=tk.W)
+        status_bar.grid(row=0, column=0, sticky=(tk.W, tk.E), padx=10, pady=5)
         
     def center_window(self):
         """Center the window on the screen"""
@@ -230,36 +361,7 @@ class PyEngAdvancedGUI:
         """Handle group selection change"""
         self.update_dictionary_combo()
         
-    def on_word_click(self, event):
-        """Handle clicking on shuffled words to insert them"""
-        if not self.is_studying:
-            return
-            
-        # Get clicked word
-        index = self.shuffled_text.index(f"@{event.x},{event.y}")
-        line_start = self.shuffled_text.index(f"{index} linestart")
-        line_end = self.shuffled_text.index(f"{index} lineend")
-        
-        # Find the word that was clicked
-        line_text = self.shuffled_text.get(line_start, line_end)
-        words = line_text.split(' | ')
-        
-        # Calculate which word was clicked
-        char_pos = int(index.split('.')[1])
-        word_index = 0
-        current_pos = 0
-        
-        for i, word in enumerate(words):
-            if current_pos <= char_pos < current_pos + len(word):
-                word_index = i
-                break
-            current_pos += len(word) + 3  # +3 for " | "
-        
-        if word_index < len(words):
-            clicked_word = words[word_index].strip()
-            
-            # Insert word at cursor position in input
-            self.english_input.insert(tk.INSERT, clicked_word + " ")
+
             
     def start_study_session(self):
         """Start a new study session"""
@@ -285,6 +387,13 @@ class PyEngAdvancedGUI:
             self.current_sentence_index = 0
             self.current_blank_level = 0
             self.total_sentences = len(self.study_engine.list_kor)
+
+            # Create sentence order (random or sequential)
+            if self.random_order_var.get():
+                self.sentence_order = list(range(self.total_sentences))
+                random.shuffle(self.sentence_order)
+            else:
+                self.sentence_order = list(range(self.total_sentences))
             
             # Update UI
             self.start_button.config(state='disabled')
@@ -295,11 +404,14 @@ class PyEngAdvancedGUI:
             self.group_combo.config(state='disabled')
             self.dictionary_combo.config(state='disabled')
             self.mode_combo.config(state='disabled')
+            self.random_checkbox.config(state='disabled')
             
             # Show first sentence
             self.show_current_sentence()
             
-            self.status_var.set(f"Study session started - {self.current_mode.get()} mode")
+            # Update status with random order info
+            random_info = " (Random Order)" if self.random_order_var.get() else ""
+            self.status_var.set(f"🚀 Study session started - {self.current_mode.get()} mode{random_info}")
             
         except Exception as e:
             messagebox.showerror("Error", f"Failed to start study session: {str(e)}")
@@ -307,20 +419,23 @@ class PyEngAdvancedGUI:
     def show_current_sentence(self):
         """Display the current sentence for study"""
         if self.current_sentence_index < self.total_sentences:
+            # Get the actual sentence index based on random order if enabled
+            actual_index = self.sentence_order[self.current_sentence_index]
+            
             # Get Korean sentence
-            korean_sentence = self.study_engine.list_kor[self.current_sentence_index].strip()
+            korean_sentence = self.study_engine.list_kor[actual_index].strip()
             self.korean_text.delete(1.0, tk.END)
             self.korean_text.insert(1.0, korean_sentence)
             
             # Get English sentence
-            self.current_sentence = self.study_engine.list_eng[self.current_sentence_index].strip()
+            self.current_sentence = self.study_engine.list_eng[actual_index].strip()
             
             # Clear previous input and feedback
             self.english_input.delete(1.0, tk.END)
             self.feedback_text.delete(1.0, tk.END)
             
             # Update progress
-            progress_text = f"Sentence {self.current_sentence_index + 1} of {self.total_sentences}"
+            progress_text = f"📝 Sentence {self.current_sentence_index + 1} of {self.total_sentences}"
             self.progress_label.config(text=progress_text)
             
             # Handle different study modes
@@ -376,7 +491,7 @@ class PyEngAdvancedGUI:
             self.english_display.insert(1.0, self.erased_sentence)
             
             # Update progress
-            progress_text = f"Sentence {self.current_sentence_index + 1} of {self.total_sentences} - Level {self.current_blank_level + 1} of {len(self.blank_levels)}"
+            progress_text = f"📝 Sentence {self.current_sentence_index + 1} of {self.total_sentences} - 🎯 Level {self.current_blank_level + 1} of {len(self.blank_levels)}"
             self.progress_label.config(text=progress_text)
             
         else:
@@ -399,18 +514,18 @@ class PyEngAdvancedGUI:
         # Show feedback
         feedback = f"Your answer: {user_answer}\n\n"
         if is_correct:
-            feedback += "✅ Correct! Well done!"
-            self.feedback_text.config(foreground='green')
+            feedback += "🎉 Correct! Well done! 🌟"
+            self.feedback_text.config(foreground=self.colors['success'])
             
             # Move to next blank level or sentence
             if self.current_mode.get() in ["Standard", "Review"]:
                 self.current_blank_level += 1
-                self.root.after(1500, self.show_blanked_sentence)
+                self.root.after(1000, self.show_blanked_sentence)
             else:
-                self.root.after(1500, self.next_sentence)
+                self.root.after(1000, self.next_sentence)
         else:
             feedback += f"❌ Incorrect. Try again or click 'Show Answer' to see the correct answer."
-            self.feedback_text.config(foreground='red')
+            self.feedback_text.config(foreground=self.colors['danger'])
             
         self.feedback_text.delete(1.0, tk.END)
         self.feedback_text.insert(1.0, feedback)
@@ -420,19 +535,19 @@ class PyEngAdvancedGUI:
         
     def show_correct_answer(self):
         """Show the correct answer"""
-        feedback = f"Correct answer: {self.current_sentence}\n\n"
-        feedback += "Study this sentence and try to remember it!"
+        feedback = f"📖 Correct answer: {self.current_sentence}\n\n"
+        feedback += "💡 Study this sentence and try to remember it!"
         
         self.feedback_text.delete(1.0, tk.END)
         self.feedback_text.insert(1.0, feedback)
-        self.feedback_text.config(foreground='blue')
+        self.feedback_text.config(foreground=self.colors['info'])
         
         # Move to next after showing answer
         if self.current_mode.get() in ["Standard", "Review"]:
             self.current_blank_level += 1
-            self.root.after(2000, self.show_blanked_sentence)
+            self.root.after(3000, self.show_blanked_sentence)
         else:
-            self.root.after(2000, self.next_sentence)
+            self.root.after(3000, self.next_sentence)
         
     def skip_sentence(self):
         """Skip current sentence"""
@@ -461,6 +576,7 @@ class PyEngAdvancedGUI:
         self.group_combo.config(state='readonly')
         self.dictionary_combo.config(state='readonly')
         self.mode_combo.config(state='readonly')
+        self.random_checkbox.config(state='normal')
         
         # Clear study area
         self.korean_text.delete(1.0, tk.END)
@@ -469,12 +585,12 @@ class PyEngAdvancedGUI:
         self.feedback_text.delete(1.0, tk.END)
         self.shuffled_text.delete(1.0, tk.END)
         self.shuffled_frame.grid_remove()
-        self.progress_label.config(text="Ready to start study session")
+        self.progress_label.config(text="🎯 Ready to start study session")
         
-        self.status_var.set("Study session ended")
+        self.status_var.set("🏁 Study session ended")
         
         if self.current_sentence_index >= self.total_sentences:
-            messagebox.showinfo("Session Complete", "Congratulations! You've completed all sentences in this session.")
+            messagebox.showinfo("🎉 Session Complete", "🎊 Congratulations! You've completed all sentences in this session. 🌟")
 
     def _on_enter_submit(self, event):
         self.submit_answer()
